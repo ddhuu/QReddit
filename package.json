@@ -1,0 +1,9 @@
+{
+  "name": "Uber-Server",
+  "version": "1.0.0",
+  "description": "Server for Uber-Clone. GraphQL , Typescript, NodeJs",
+  "main": "index.js",
+  "repository": "https://github.com/ddhuu/Uber.git",
+  "author": "ddhuu2003",
+  "license": "MIT"
+}
