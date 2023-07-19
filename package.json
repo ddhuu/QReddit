@@ -7,10 +7,10 @@
   "author": "ddhuu2003",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^20.4.2",
     "@types/cors": "^2.8.13",
     "@types/helmet": "^4.0.0",
     "@types/morgan": "^1.9.4",
+    "@types/node": "^20.4.2",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
     "tslint-config-prettier": "^1.18.0",
@@ -20,10 +20,12 @@
     "dev": "cd src && nodemon --exec  ts-node  index.ts -e ts,graphql"
   },
   "dependencies": {
-    
     "cors": "^2.8.5",
+    "express-graphql": "^0.12.0",
+    "graphql-tools": "^9.0.0",
     "graphql-yoga": "^4.0.3",
     "helmet": "^7.0.0",
+    "merge-graphql-schemas": "^1.7.8",
     "morgan": "^1.10.0"
   }
 }
