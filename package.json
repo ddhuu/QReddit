@@ -1,5 +1,5 @@
 {
-  "name": "Uber-Server",
+  "name": "Uber_Server",
   "version": "1.0.0",
   "description": "Server for Uber-Clone. GraphQL , Typescript, NodeJs",
   "main": "index.js",
@@ -8,6 +8,9 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.4.2",
+    "@types/cors": "^2.8.13",
+    "@types/helmet": "^4.0.0",
+    "@types/morgan": "^1.9.4",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
     "tslint-config-prettier": "^1.18.0",
@@ -15,7 +18,12 @@
   },
   "scripts": {
     "dev": "cd src && nodemon --exec  ts-node  index.ts -e ts,graphql"
+  },
+  "dependencies": {
+    
+    "cors": "^2.8.5",
+    "graphql-yoga": "^4.0.3",
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0"
   }
-  
-  
 }
