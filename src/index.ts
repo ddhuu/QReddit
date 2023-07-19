@@ -1,4 +1,4 @@
-import {OptiontdFileSelect multiple} from "graphql-yoga"
+import {Options} from "graphql-yoga"
 import app from "./app";
 
 const PORT : number | string = process.env.PORT || 4000;
