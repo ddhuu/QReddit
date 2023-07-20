@@ -1,0 +1,13 @@
+{
+  "name": "QReddit",
+  "version": "1.0.0",
+  "description": "Clone Reddit using TS, Next JS , chakraUI, Express JS, GraphQL ",
+  "main": "index.js",
+  "repository": "https://github.com/ddhuu/QReddit.git",
+  "author": "ddhuu203",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "typescript": "^5.1.6"
+  }
+}
