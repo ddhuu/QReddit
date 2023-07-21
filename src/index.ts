@@ -6,7 +6,7 @@ import { createConnection } from 'typeorm';
 const main = async() => {
   await createConnection({
     type:'postgres',
-    database: 'Qreddit',
+    database: 'QReddit',
     username: process.env.DB_USERNAME_DEV,
     password: process.env.DB_PASSWORD_DEV,
     logging: true,

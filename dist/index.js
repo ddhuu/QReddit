@@ -19,7 +19,7 @@ const typeorm_1 = require("typeorm");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, typeorm_1.createConnection)({
         type: 'postgres',
-        database: 'Qreddit',
+        database: 'QReddit',
         username: process.env.DB_USERNAME_DEV,
         password: process.env.DB_PASSWORD_DEV,
         logging: true,
