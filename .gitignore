@@ -4,3 +4,8 @@
 # Dependencies directory
 
 node_modules/
+
+# dotenv enviroment variables file
+
+.env
+

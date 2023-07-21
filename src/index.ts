@@ -1,1 +1,18 @@
-console.log("Hello World!");
+require('dotenv').config();
+import 'reflect-metadata'
+import express from 'express'
+import { createConnection } from 'typeorm';
+
+const main = async() => {
+  await createConnection({
+    type:'postgres',
+    database: 'Qreddit',
+    username: process.env.DB_USERNAME_DEV,
+    password: process.env.DB_PASSWORD_DEV,
+    logging: true,
+    synchronize: true
+  })
+  const app = express();
+  app.listen(4000,() => console.log('Server started.'));
+}
+main().catch(error=> console.log(error));
