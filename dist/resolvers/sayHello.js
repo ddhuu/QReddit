@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sayHello = void 0;
 const type_graphql_1 = require("type-graphql");
 let sayHello = exports.sayHello = class sayHello {
-    hello() {
+    sayHello() {
         return 'Hello World';
     }
 };
@@ -21,7 +21,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], sayHello.prototype, "hello", null);
+], sayHello.prototype, "sayHello", null);
 exports.sayHello = sayHello = __decorate([
     (0, type_graphql_1.Resolver)()
 ], sayHello);

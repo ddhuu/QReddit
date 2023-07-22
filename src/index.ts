@@ -27,7 +27,7 @@ const main = async() => {
   await apolloServer.start()
   apolloServer.applyMiddleware({app, cors : false})
   const PORT = process.env.PORT || 4000
-  app.listen(PORT,() => console.log('Server started.'))
+  app.listen(PORT,() => console.log(`Server started on port ${PORT}. GraphQL Server started on localhost: ${PORT}${apolloServer.graphqlPath}`))
 }
 
 main().catch(error=> console.log(error));
