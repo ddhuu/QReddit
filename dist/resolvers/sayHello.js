@@ -9,20 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sayHello = void 0;
+exports.sayhello = void 0;
 const type_graphql_1 = require("type-graphql");
-let sayHello = exports.sayHello = class sayHello {
-    sayHello() {
-        return 'Hello World';
+let sayhello = exports.sayhello = class sayhello {
+    hello() {
+        return 'say hello';
     }
 };
 __decorate([
-    (0, type_graphql_1.Query)(_returns => String),
+    (0, type_graphql_1.Query)(_return => String),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], sayHello.prototype, "sayHello", null);
-exports.sayHello = sayHello = __decorate([
+], sayhello.prototype, "hello", null);
+exports.sayhello = sayhello = __decorate([
     (0, type_graphql_1.Resolver)()
-], sayHello);
+], sayhello);
 //# sourceMappingURL=sayHello.js.map
