@@ -28,38 +28,57 @@ exports.UserResolver = void 0;
 const argon2_1 = __importDefault(require("argon2"));
 const User_1 = require("../entities/User");
 const type_graphql_1 = require("type-graphql");
+const UserRes_1 = require("../types/UserRes");
+const RegisterInput_1 = require("../types/RegisterInput");
 let UserResolver = exports.UserResolver = class UserResolver {
-    register(email, username, password) {
+    register({ username, email, password }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const filter = {
-                    where: { username }
+                    where: [{ username }, { email }]
                 };
                 const existingUser = yield User_1.User.findOne(filter);
                 if (existingUser)
-                    return null;
+                    return {
+                        code: 400,
+                        success: false,
+                        message: "Duplicate username or email",
+                        error: [
+                            {
+                                field: existingUser.username === username ? 'username' : 'email',
+                                message: `${existingUser.username === username ? 'Username' : 'email'} already taken !`
+                            }
+                        ]
+                    };
                 const hashedPassword = yield argon2_1.default.hash(password);
                 const newUser = User_1.User.create({
                     username,
                     password: hashedPassword,
                     email
                 });
-                return yield User_1.User.save(newUser);
+                return {
+                    code: 200,
+                    success: true,
+                    message: 'User Registration Successful',
+                    user: yield User_1.User.save(newUser)
+                };
             }
             catch (error) {
                 console.log(error);
-                return null;
+                return {
+                    code: 500,
+                    success: false,
+                    message: `Internal Server Error: ${error.message}`
+                };
             }
         });
     }
 };
 __decorate([
-    (0, type_graphql_1.Mutation)(_return => User_1.User, { nullable: true }),
-    __param(0, (0, type_graphql_1.Arg)('email')),
-    __param(1, (0, type_graphql_1.Arg)('username')),
-    __param(2, (0, type_graphql_1.Arg)('password')),
+    (0, type_graphql_1.Mutation)(_return => UserRes_1.UserMutationResponse, { nullable: true }),
+    __param(0, (0, type_graphql_1.Arg)('registerInput')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:paramtypes", [RegisterInput_1.RegisterInput]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "register", null);
 exports.UserResolver = UserResolver = __decorate([

@@ -1,0 +1,1 @@
+{"version":3,"file":"MutationRes.js","sourceRoot":"","sources":["../../src/types/MutationRes.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,+CAAoD;AAI7C,IAAe,gBAAgB,8BAA/B,MAAe,gBAAgB;CAUrC,CAAA;AARE;IADC,IAAA,oBAAK,GAAE;;8CACI;AAGZ;IADC,IAAA,oBAAK,GAAE;;iDACS;AAGjB;IADC,IAAA,oBAAK,EAAC,EAAC,QAAQ,EAAE,IAAI,EAAC,CAAC;;iDACR;2BARG,gBAAgB;IAFrC,IAAA,4BAAa,GAAE;GAEM,gBAAgB,CAUrC"}
