@@ -4,16 +4,29 @@ import { Arg, Mutation, Resolver } from 'type-graphql';
 import { FindOneOptions } from 'typeorm';
 import { UserMutationResponse } from '../types/UserRes';
 import { RegisterInput } from '../types/RegisterInput';
+import { validateRegisterInput } from '../utils/validateRegisterInput';
+import { LoginInput } from '../types/LoginInput';
 
 
 @Resolver ()
 export class  UserResolver {
   @Mutation (_return => UserMutationResponse, {nullable:true})
   async register (
-    @Arg('registerInput') {username , email , password} : RegisterInput
+    @Arg('registerInput') registerInput: RegisterInput
   ) : Promise<UserMutationResponse>
   {
+       const validateRegisterInputErrors = validateRegisterInput (registerInput)
+       if (validateRegisterInputErrors)
+       {
+          return{
+            code: 400,
+            success: false,
+            ...validateRegisterInputErrors
+
+            }              
+       }
        try {
+        const {username,email,password} = registerInput
         const filter  : FindOneOptions<User> = {
           where :[{username} , {email}]
         }
@@ -56,5 +69,55 @@ export class  UserResolver {
           message: `Internal Server Error: ${error.message}`
         }
        }
+  }
+
+  @Mutation(_return => UserMutationResponse)
+  async login(@Arg('loginInput') {usernameOremail , password} : LoginInput ) : Promise<UserMutationResponse>{
+    try {
+
+      const filter  : FindOneOptions<User> = {
+       where : [  usernameOremail.includes('@') ? { email: usernameOremail } : { username: usernameOremail }]
+      }
+      const existingUser = await User.findOne(filter)
+
+      if(!existingUser)
+      {
+       return {
+        code: 400,
+        success: false,
+        message: 'User not found',
+        error :[
+          {field :'usernameOremail', message: 'Username of Email is incorrect'}
+        ]
+       }
+      
+      }
+       const passwordValid = await argon2.verify(existingUser.password , password )
+
+       if(!passwordValid) {
+          return {
+            code: 400,
+            success: false,
+            message: 'Password is wrong',
+            error:
+            [ {field:'password', message:'Wrong password'}]
+          }
+        }
+   
+       return {
+          code: 200,
+          success: true,
+          message: 'Logged in successfully',
+          user: existingUser
+        }
+      
+   } catch (error) {
+        console.log(error)
+        return {
+          code: 500 ,
+          success: false,
+          message: `Internal Server Error: ${error.message}`
+        }
+    }
   }
 }

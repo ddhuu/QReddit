@@ -9,19 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FieldError = void 0;
+exports.LoginInput = void 0;
 const type_graphql_1 = require("type-graphql");
-let FieldError = exports.FieldError = class FieldError {
+let LoginInput = exports.LoginInput = class LoginInput {
 };
 __decorate([
     (0, type_graphql_1.Field)(),
     __metadata("design:type", String)
-], FieldError.prototype, "field", void 0);
+], LoginInput.prototype, "usernameOremail", void 0);
 __decorate([
-    (0, type_graphql_1.Field)({ nullable: true }),
+    (0, type_graphql_1.Field)(),
     __metadata("design:type", String)
-], FieldError.prototype, "message", void 0);
-exports.FieldError = FieldError = __decorate([
-    (0, type_graphql_1.ObjectType)()
-], FieldError);
-//# sourceMappingURL=FieldError.js.map
+], LoginInput.prototype, "password", void 0);
+exports.LoginInput = LoginInput = __decorate([
+    (0, type_graphql_1.InputType)()
+], LoginInput);
+//# sourceMappingURL=LoginInput.js.map

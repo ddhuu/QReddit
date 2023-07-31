@@ -5,6 +5,6 @@ export class FieldError {
    @Field()
    field : string
 
-   @Field()
-   message: string
+   @Field({nullable : true})
+   message?: string
 }
