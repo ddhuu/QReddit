@@ -9,6 +9,7 @@ import { buildSchema } from 'type-graphql';
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 import { UserResolver } from './resolvers/user';
 import { sayhello } from './resolvers/sayHello';
+import mongoose from 'mongoose';
 
 
 const main = async() => {
@@ -22,10 +23,18 @@ const main = async() => {
     entities : [User, Post]
   })
   const app = express()
+
+  // Store Session/ Cookies
+
+  await mongoose.connect (`mongodb+srv://ddhuu:${process.env.SESSION_DB_PASSWORD_DEV_PROD}@reddit.rpp0hor.mongodb.net/?retryWrites=true&w=majority`)
+  
+  console.log('Mongo DB connected')
+  
   const apolloServer = new ApolloServer({
     schema :  await buildSchema({resolvers: [sayhello,UserResolver], validate : false}),
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()]
   })
+  
   await apolloServer.start()
   apolloServer.applyMiddleware({app, cors : false})
   const PORT = process.env.PORT || 4000
