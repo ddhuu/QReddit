@@ -24,6 +24,9 @@ const apollo_server_core_1 = require("apollo-server-core");
 const user_1 = require("./resolvers/user");
 const sayHello_1 = require("./resolvers/sayHello");
 const mongoose_1 = __importDefault(require("mongoose"));
+const express_session_1 = __importDefault(require("express-session"));
+const connect_mongo_1 = __importDefault(require("connect-mongo"));
+const constants_1 = require("./constants");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, typeorm_1.createConnection)({
         type: 'postgres',
@@ -35,8 +38,21 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         entities: [User_1.User, Post_1.Post]
     });
     const app = (0, express_1.default)();
-    yield mongoose_1.default.connect(`mongodb+srv://ddhuu:${process.env.SESSION_DB_PASSWORD_DEV_PROD}@reddit.rpp0hor.mongodb.net/?retryWrites=true&w=majority`);
+    const mongoUrl = `mongodb+srv://ddhuu:${process.env.SESSION_DB_PASSWORD_DEV_PROD}@reddit.rpp0hor.mongodb.net/?retryWrites=true&w=majority`;
+    yield mongoose_1.default.connect(mongoUrl);
     console.log('Mongo DB connected');
+    app.use((0, express_session_1.default)({
+        name: constants_1.COOKIE_NAME,
+        store: connect_mongo_1.default.create({ mongoUrl }),
+        cookie: {
+            maxAge: 1000 * 60 * 60,
+            httpOnly: true,
+            secure: constants_1.__prod__,
+            sameSite: 'lax',
+        },
+        secret: process.env.SESSION_SECRET_DEV_PROD,
+        saveUninitialized: false,
+    }));
     const apolloServer = new apollo_server_express_1.ApolloServer({
         schema: yield (0, type_graphql_1.buildSchema)({ resolvers: [sayHello_1.sayhello, user_1.UserResolver], validate: false }),
         plugins: [(0, apollo_server_core_1.ApolloServerPluginLandingPageGraphQLPlayground)()]
