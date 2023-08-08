@@ -80,7 +80,7 @@ let UserResolver = exports.UserResolver = class UserResolver {
             }
         });
     }
-    login({ usernameOremail, password }) {
+    login({ usernameOremail, password }, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const filter = {
@@ -106,6 +106,7 @@ let UserResolver = exports.UserResolver = class UserResolver {
                         error: [{ field: 'password', message: 'Wrong password' }]
                     };
                 }
+                req.session.userId = existingUser.id;
                 return {
                     code: 200,
                     success: true,
@@ -134,8 +135,9 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Mutation)(_return => UserRes_1.UserMutationResponse),
     __param(0, (0, type_graphql_1.Arg)('loginInput')),
+    __param(1, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [LoginInput_1.LoginInput]),
+    __metadata("design:paramtypes", [LoginInput_1.LoginInput, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "login", null);
 exports.UserResolver = UserResolver = __decorate([

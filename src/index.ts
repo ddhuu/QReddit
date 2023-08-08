@@ -13,6 +13,7 @@ import mongoose from 'mongoose';
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import { COOKIE_NAME, __prod__ } from './constants';
+import { Context } from './types/Context';
 
 
 const main = async() => {
@@ -49,7 +50,9 @@ const main = async() => {
   
   const apolloServer = new ApolloServer({
     schema :  await buildSchema({resolvers: [sayhello,UserResolver], validate : false}),
-    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()]
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+    context: ({req,res}) : Context  => ({req,res})
+
   })
   
   await apolloServer.start()

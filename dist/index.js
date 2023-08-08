@@ -55,7 +55,8 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     }));
     const apolloServer = new apollo_server_express_1.ApolloServer({
         schema: yield (0, type_graphql_1.buildSchema)({ resolvers: [sayHello_1.sayhello, user_1.UserResolver], validate: false }),
-        plugins: [(0, apollo_server_core_1.ApolloServerPluginLandingPageGraphQLPlayground)()]
+        plugins: [(0, apollo_server_core_1.ApolloServerPluginLandingPageGraphQLPlayground)()],
+        context: ({ req, res }) => ({ req, res })
     });
     yield apolloServer.start();
     apolloServer.applyMiddleware({ app, cors: false });
