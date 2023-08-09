@@ -32,8 +32,9 @@ const UserRes_1 = require("../types/UserRes");
 const RegisterInput_1 = require("../types/RegisterInput");
 const validateRegisterInput_1 = require("../utils/validateRegisterInput");
 const LoginInput_1 = require("../types/LoginInput");
+const constants_1 = require("../constants");
 let UserResolver = exports.UserResolver = class UserResolver {
-    register(registerInput) {
+    register(registerInput, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
             const validateRegisterInputErrors = (0, validateRegisterInput_1.validateRegisterInput)(registerInput);
             if (validateRegisterInputErrors) {
@@ -58,11 +59,13 @@ let UserResolver = exports.UserResolver = class UserResolver {
                         ]
                     };
                 const hashedPassword = yield argon2_1.default.hash(password);
-                const newUser = User_1.User.create({
+                let newUser = User_1.User.create({
                     username,
                     password: hashedPassword,
                     email
                 });
+                newUser = yield User_1.User.save(newUser);
+                req.session.userId = newUser.id;
                 return {
                     code: 200,
                     success: true,
@@ -124,12 +127,25 @@ let UserResolver = exports.UserResolver = class UserResolver {
             }
         });
     }
+    logout({ req, res }) {
+        return new Promise((resolve, _reject) => {
+            res.clearCookie(constants_1.COOKIE_NAME);
+            req.session.destroy(err => {
+                if (err) {
+                    console.log('DESTROY SESSION ERROR', err);
+                    resolve(false);
+                }
+                resolve(true);
+            });
+        });
+    }
 };
 __decorate([
     (0, type_graphql_1.Mutation)(_return => UserRes_1.UserMutationResponse, { nullable: true }),
     __param(0, (0, type_graphql_1.Arg)('registerInput')),
+    __param(1, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [RegisterInput_1.RegisterInput]),
+    __metadata("design:paramtypes", [RegisterInput_1.RegisterInput, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "register", null);
 __decorate([
@@ -140,6 +156,13 @@ __decorate([
     __metadata("design:paramtypes", [LoginInput_1.LoginInput, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "login", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(_returns => Boolean),
+    __param(0, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "logout", null);
 exports.UserResolver = UserResolver = __decorate([
     (0, type_graphql_1.Resolver)()
 ], UserResolver);

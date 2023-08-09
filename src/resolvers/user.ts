@@ -7,13 +7,15 @@ import { RegisterInput } from '../types/RegisterInput';
 import { validateRegisterInput } from '../utils/validateRegisterInput';
 import { LoginInput } from '../types/LoginInput';
 import { Context } from '../types/Context';
+import { COOKIE_NAME } from '../constants';
 
 
 @Resolver ()
 export class  UserResolver {
   @Mutation (_return => UserMutationResponse, {nullable:true})
   async register (
-    @Arg('registerInput') registerInput: RegisterInput
+    @Arg('registerInput') registerInput: RegisterInput,
+    @Ctx() {req}: Context
     
   ) : Promise<UserMutationResponse>
   {
@@ -50,11 +52,13 @@ export class  UserResolver {
         
         const hashedPassword = await argon2.hash(password)
 
-        const newUser = User.create({
+        let  newUser = User.create({
           username,
           password: hashedPassword,
           email
         })
+        newUser = await User.save(newUser)
+        req.session.userId = newUser.id
         return {
           code : 200,
           success: true,
@@ -126,4 +130,22 @@ export class  UserResolver {
         }
     }
   }
+
+
+  @Mutation(_returns => Boolean)
+  logout(@Ctx() {req,res} : Context ) : Promise<boolean>
+  {
+        return new Promise ((resolve,_reject) => {
+          res.clearCookie(COOKIE_NAME)
+          req.session.destroy (err => {
+            if ( err)
+            {
+              console.log('DESTROY SESSION ERROR', err)
+              resolve(false)
+            }
+            resolve(true)
+          })
+        })
+  }
+
 }
