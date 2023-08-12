@@ -70,7 +70,7 @@ let UserResolver = exports.UserResolver = class UserResolver {
                     code: 200,
                     success: true,
                     message: 'User Registration Successful',
-                    user: yield User_1.User.save(newUser)
+                    user: newUser
                 };
             }
             catch (error) {

@@ -14,7 +14,7 @@ const type_graphql_1 = require("type-graphql");
 let FieldError = exports.FieldError = class FieldError {
 };
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     __metadata("design:type", String)
 ], FieldError.prototype, "field", void 0);
 __decorate([

@@ -9,38 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Post = void 0;
+exports.CreatePostInput = void 0;
 const type_graphql_1 = require("type-graphql");
-const typeorm_1 = require("typeorm");
-let Post = exports.Post = class Post extends typeorm_1.BaseEntity {
+let CreatePostInput = exports.CreatePostInput = class CreatePostInput {
 };
 __decorate([
-    (0, type_graphql_1.Field)(_type => type_graphql_1.ID),
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], Post.prototype, "id", void 0);
-__decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Post.prototype, "title", void 0);
+], CreatePostInput.prototype, "title", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Post.prototype, "text", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.CreateDateColumn)(),
-    __metadata("design:type", Date)
-], Post.prototype, "createAt", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.UpdateDateColumn)(),
-    __metadata("design:type", Date)
-], Post.prototype, "updateAt", void 0);
-exports.Post = Post = __decorate([
-    (0, type_graphql_1.ObjectType)(),
-    (0, typeorm_1.Entity)()
-], Post);
-//# sourceMappingURL=Post.js.map
+], CreatePostInput.prototype, "text", void 0);
+exports.CreatePostInput = CreatePostInput = __decorate([
+    (0, type_graphql_1.InputType)()
+], CreatePostInput);
+//# sourceMappingURL=CreatePostInput.js.map

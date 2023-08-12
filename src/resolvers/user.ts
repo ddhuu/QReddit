@@ -63,7 +63,7 @@ export class  UserResolver {
           code : 200,
           success: true,
           message: 'User Registration Successful',
-          user : await User.save(newUser)
+          user : newUser
         }
 
         
