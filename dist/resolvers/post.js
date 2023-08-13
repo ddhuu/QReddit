@@ -27,6 +27,7 @@ const CreatePostInput_1 = require("../types/CreatePostInput");
 const type_graphql_1 = require("type-graphql");
 const Post_1 = require("../entities/Post");
 const UpdatePostInput_1 = require("../types/UpdatePostInput");
+const checkAuth_1 = require("../middleware/checkAuth");
 let PostResolver = exports.PostResolver = class PostResolver {
     createPost({ title, text }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -122,6 +123,7 @@ let PostResolver = exports.PostResolver = class PostResolver {
 };
 __decorate([
     (0, type_graphql_1.Mutation)(_return => PostMutationRes_1.PostMutationRes, { nullable: true }),
+    (0, type_graphql_1.UseMiddleware)(checkAuth_1.checkAuth),
     __param(0, (0, type_graphql_1.Arg)('createPostInput')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [CreatePostInput_1.CreatePostInput]),
@@ -142,6 +144,7 @@ __decorate([
 ], PostResolver.prototype, "post", null);
 __decorate([
     (0, type_graphql_1.Mutation)(_return => PostMutationRes_1.PostMutationRes),
+    (0, type_graphql_1.UseMiddleware)(checkAuth_1.checkAuth),
     __param(0, (0, type_graphql_1.Arg)('updateInput')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [UpdatePostInput_1.UpdatePostInput]),
@@ -149,6 +152,7 @@ __decorate([
 ], PostResolver.prototype, "updatePost", null);
 __decorate([
     (0, type_graphql_1.Mutation)(_return => PostMutationRes_1.PostMutationRes),
+    (0, type_graphql_1.UseMiddleware)(checkAuth_1.checkAuth),
     __param(0, (0, type_graphql_1.Arg)('id', _type => type_graphql_1.ID)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
